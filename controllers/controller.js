@@ -2,8 +2,6 @@ import { HttpError } from '../helpers/index.js';
 import * as contactsService from '../models/contacts.js';
 import { contactsAddSchema, contactsUpdateSchema } from '../schemas/contacts-schemas.js';
 
-// console.log(contactsService)
-
 const getAll = async (req, res, next) => {
    try {
       const result = await contactsService.listContacts();

@@ -16,7 +16,13 @@ export const contactsAddSchema = Joi.object({
 })
 
 export const contactsUpdateSchema = Joi.object({
-   name: Joi.string(),
-   email: Joi.string(),
-   phone: Joi.string(),
+   name: Joi.string().messages({
+      "string.base": `"name" must be text`,
+  }),
+   email: Joi.string().messages({
+      "string.base": `"name" must be text`,
+  }),
+   phone: Joi.string().messages({
+      "string.base": `"name" must be text`,
+  }),
 })
