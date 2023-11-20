@@ -39,10 +39,20 @@ const deleteById = async (req, res, next)=>{
    };
 }
 
+const updateFavoriteById = async (req, res, next)=>{
+   const result = await Contact.findByIdAndUpdate(req.params.id, req.body);
+   if (!result){
+      next(new HttpError(404, `Contacts with id=${req.params.id} not found`));
+   } else{
+   res.json(result);
+   };
+}
+
 export default {
    getAll: controlWrapper(getAll),
    getById: controlWrapper(getById),
    add: controlWrapper(add),
    updateById: controlWrapper(updateById),
    deleteById: controlWrapper(deleteById),
+   updateFavoriteById: controlWrapper(updateFavoriteById),
 }
