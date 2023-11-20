@@ -9,5 +9,3 @@ const bodyValidator = (schema) => (req, res, next) => {
 };
 
 export default bodyValidator;
-
-// const asyncWrapper = (controller) => (req, res, next) => controller(req, res).catch(next);
