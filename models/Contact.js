@@ -3,20 +3,24 @@ import Joi from "joi";
 import { handleSaveError, preUpdate } from "./hooks.js";
 
 const contactSchema = new Schema({
-   name: {
-     type: String,
-     required: [true, 'Set name for contact'],
-   },
-   email: {
-     type: String,
-   },
-   phone: {
-     type: String,
-   },
-   favorite: {
-     type: Boolean,
-     default: false,
-   }
+  name: {
+    type: String,
+    required: [true, 'Set name for contact'],
+  },
+  email: {
+    type: String,
+  },
+  phone: {
+    type: String,
+  },
+  favorite: {
+    type: Boolean,
+    default: false,
+  },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'user',
+  }
  }, {versionKey: false, timestamps: true});
 
  contactSchema.post("save", handleSaveError);
@@ -41,6 +45,7 @@ export const contactsAddSchema = Joi.object({
      "string.base": `"phone" must be text`,
  }),
  favorite: Joi.boolean(),
+ owner: Joi.object()
 })
 
 export const contactsUpdateSchema = Joi.object({
