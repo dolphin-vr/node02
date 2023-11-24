@@ -1,6 +1,7 @@
 import { controlWrapper } from "../decorators/index.js";
-import { HttpError } from "../helpers/index.js";
+// import { HttpError } from "../helpers/index.js";
 import User from "../models/User.js";
+import { HttpError } from "../helpers/HttpError.js";
 
 const {JWT_SECRET} = process.env;
 

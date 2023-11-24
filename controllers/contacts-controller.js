@@ -1,6 +1,7 @@
 import { controlWrapper } from '../decorators/index.js';
-import { HttpError } from '../helpers/index.js';
+// import { HttpError } from '../helpers/index.js';
 import Contact from '../models/Contact.js';
+import { HttpError } from "../helpers/HttpError.js";
 
 const getAll = async (req, res) => {
    const result = await Contact.find();
