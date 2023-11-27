@@ -16,7 +16,7 @@ const signUp = async (req, res, next)=>{
    } else{
       const hashPasswd = await bcrypt.hash(password, 10);
       const newUser = await User.create({...req.body, password: hashPasswd});
-      res.status(201).json({usename: newUser.username, email: newUser.email});
+      res.status(201).json({usename: newUser.username, email: newUser.email, subscription: newUser.subscription});
    }
 };
 
@@ -34,21 +34,22 @@ const signIn = async (req, res, next)=>{
    const token = jwt.sign(payload, JWT_SECRET, {expiresIn: "72h"});
    console.log(token)
    await User.findByIdAndUpdate(user._id, {token});
-   res.json({token});
-}
-
-const current = async (req, res, next)=>{
-   const {username, email} = req.user;
-   res.json({username, email});
+   res.json({token, user: {email: user.email, subscription: user.subscription}});
 }
 
 const signOut = async (req, res, next)=>{
-   await User.findByIdAndUpdate(_id = req.user._id, {token: ""});
+   await User.findByIdAndUpdate(req.user._id, {token: ""});
    res.json('Signout successful');
+}
+
+const current = async (req, res, next)=>{
+   const {username, email, subscription} = req.user;
+   res.json({username, email, subscription});
 }
 
 export default{
    signUp: controlWrapper(signUp),
    signIn: controlWrapper(signIn),
+   signOut: controlWrapper(signOut),
    current: controlWrapper(current),
 }
