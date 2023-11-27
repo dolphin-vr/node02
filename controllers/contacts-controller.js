@@ -16,7 +16,7 @@ const getAll = async (req, res) => {
 const getById = async (req, res, next) => {
    const {_id: owner} = req.user;
    const {id} = req.params;
-   const result = await Contact.findOne({_id: id, owner});
+   const result = await Contact.findOne({_id: id, owner}, "-createdAt -updatedAt").populate("owner", "username email");
    if (!result){
       next(new HttpError(404, `Contact with id=${req.params.id} not found`));
    } else{

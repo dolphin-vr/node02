@@ -1,7 +1,9 @@
 import Joi from "joi";
 import { Schema, model } from "mongoose";
+import { handleSaveError, preUpdate } from "./hooks.js";
 
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+const subscriptionType = ["starter", "pro", "business"];
 
 const userSchema = new Schema({
    username: {
@@ -11,6 +13,7 @@ const userSchema = new Schema({
    },   
   password: {
    type: String,
+   minLength: 7,
    required: [true, 'Set password for user'],
  },
  email: {
@@ -21,12 +24,15 @@ const userSchema = new Schema({
  },
  subscription: {
    type: String,
-   minLength: 7,
-   enum: ["starter", "pro", "business"],
+   enum: subscriptionType,
    default: "starter"
  },
  token: String
 }, {versionKey: false, timestamps: true});
+
+userSchema.post("save", handleSaveError);
+userSchema.pre("findOneAndUpdate", preUpdate);
+userSchema.post("findOneAndUpdate", handleSaveError);
 
 const User = model("user", userSchema);
 
@@ -55,5 +61,12 @@ export const SignInSchema = Joi.object({
       "string.base": '"password" must be string',
    }),
 });
+
+export const SubscriptionSchema = Joi.object({
+   subscription: Joi.string().required().valid(...subscriptionType).messages({
+      "any.required": 'missing required field "subscription"',
+      "string.base": `"subscription" must be one of ${subscriptionType}`,
+   }),
+})
 
 export default User;
