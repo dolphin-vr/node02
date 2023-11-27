@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import { controlWrapper } from "../decorators/index.js";
 import { HttpError } from "../helpers/HttpError.js";
 import User from "../models/User.js";
@@ -7,11 +8,10 @@ const {JWT_SECRET} = process.env;
 const authentication = async (req, res, next)=>{
    const {authorization} = req.headers;
    if (!authorization){
-      console.log('auth no header');
       return next(new HttpError(401, "Authorization header not found"));
       // throw new HttpError(401, "Authorization header not found");
    }
-   const [bearer, token] = authorization;
+   const [bearer, token] = authorization.split(" ");
    if (bearer !== "Bearer"){
       return next(new HttpError(401));      
    }

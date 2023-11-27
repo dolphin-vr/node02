@@ -10,6 +10,7 @@ router.use(authentication);
 
 router.route('/')
    .get(contactController.getAll)
+   .delete(contactController.deleteAll)
    .post(isEmptyBody, bodyValidator(contactsAddSchema), contactController.add);
 
 router.route('/:id')
@@ -18,6 +19,9 @@ router.route('/:id')
    .delete(isValidId, contactController.deleteById);
 
 router.route('/:id/favorite')
-   .patch(isValidId, isEmptyBody, bodyValidator(contactFavoriteSchema), contactController.updateFavoriteById)
+   .patch(isValidId, isEmptyBody, bodyValidator(contactFavoriteSchema), contactController.updateFavoriteById);
+
+// router.route('/all')
+//    .delete(contactController.deleteAll);
 
 export default router;
