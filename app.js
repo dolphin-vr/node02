@@ -4,7 +4,6 @@ import cors from 'cors';
 import "dotenv/config"
 
 import contactsRouter from './routes/api/contacts-router.js';
-import authRouter from './routes/api/auth-router.js';
 import userRouter from './routes/api/user-router.js'
 
 const app = express();
@@ -15,7 +14,6 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/auth', authRouter);
 app.use('/api/contacts', contactsRouter);
 app.use('/api/user', userRouter);
 
