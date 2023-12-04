@@ -14,16 +14,15 @@ const {JWT_SECRET} = process.env;
 const avatarPath = path.resolve("public", "avatars");
 
 const register = async (req, res, next)=>{
-   console.log('signup');
    const {email, password}=req.body;
    const user = await User.findOne({email});
    if (user){
-      return next(new HttpError(409, 'Such e-mail already exest'))
+      return next(new HttpError(409, 'Such e-mail already exist'))
    }
    const avatar = gravatar.url(email, { defaultIcon: 'retro', size: 200, rating: 'x' });
    const hashPasswd = await bcrypt.hash(password, 10);
    const newUser = await User.create({...req.body, password: hashPasswd, avatarURL: avatar});
-   res.status(201).json({usename: newUser.username, email: newUser.email, subscription: newUser.subscription});
+   res.status(201).json({username: newUser.username, email: newUser.email, subscription: newUser.subscription});
 };
 
 const login = async (req, res, next)=>{
