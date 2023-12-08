@@ -1,11 +1,40 @@
-# Крок 1
+Додавання повторної відправки email користувачу з посиланням для верифікації
 
-# Крок 2
+Необхідно передбачити, варіант, що користувач може випадково видалити лист. Воно може не дійти з якоїсь причини до адресата. Наш сервіс відправки листів під час реєстрації видав помилку і т.д.
 
-# Крок 3
+@ POST /users/verify
+Отримує body в форматі {email}
+Якщо в body немає обов'язкового поля email, повертає json з ключем {"message":"missing required field email"} і статусом 400
+Якщо з body все добре, виконуємо повторну відправку листа з verificationToken на вказаний email, але тільки якщо користувач не верифікований
+Якщо користувач вже пройшов верифікацію відправити json з ключем {"message":"Verification has already been passed"} зі статусом 400 Bad Request
+Resending a email request
+POST /users/verify
+Content-Type: application/json
+RequestBody: {
+  "email": "example@example.com"
+}
+`` `
 
-# Крок 4
+#### Resending a email validation error
 
+```shell
+Status: 400 Bad Request
+Content-Type: application/json
+ResponseBody: <Помилка від Joi або іншої бібліотеки валідації>
+Resending a email success response
+Status: 200 Ok
+Content-Type: application/json
+ResponseBody: {
+  "message": "Verification email sent"
+}
+Resend email for verified user
+Status: 400 Bad Request
+Content-Type: application/json
+ResponseBody: {
+  message: "Verification has already been passed"
+}
+ПРИМІТКА
+Як альтернативу SendGrid можна використовувати пакет nodemailer
 
-Додаткове завдання - 
-1. Написати unit-тести для контролера входу (логін)
+Додаткове завдання - необов'язкове
+1. Напишіть dockerfile для вашої програми
