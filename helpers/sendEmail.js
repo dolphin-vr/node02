@@ -11,7 +11,6 @@ const nodemailerConfig = {
       pass: UKRNET_PASSWD,
    },
 };
-// console.log("nodemailerConfig= ", nodemailerConfig)
 const transport = nodemailer.createTransport(nodemailerConfig);
 
 const sendEmail = (data) => {
@@ -20,9 +19,3 @@ const sendEmail = (data) => {
 };
 
 export default sendEmail;
-
-
-// const sendEmail = data => {
-//    const email = {...data, from: UKR_NET_EMAIL};
-//    return transport.sendMail(email)
-// }

@@ -1,5 +1,4 @@
 import { controlWrapper } from '../decorators/index.js';
-// import { HttpError } from '../helpers/index.js';
 import Contact from '../models/Contact.js';
 import { HttpError } from "../helpers/HttpError.js";
 
@@ -62,7 +61,6 @@ const updateFavoriteById = async (req, res, next)=>{
 
 const deleteAll = async (req, res, next)=>{
    const result = await Contact.deleteMany();
-   console.log(result);
    if (!result){
       next(new HttpError(404, "X3 what wrong"))
    }
