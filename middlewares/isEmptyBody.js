@@ -1,4 +1,3 @@
-// import { HttpError } from "../helpers/index.js";
 import { HttpError } from "../helpers/HttpError.js";
 
 const isEmptyBody = async(req, res, next)=> {
@@ -10,4 +9,3 @@ const isEmptyBody = async(req, res, next)=> {
 }
 
 export default isEmptyBody;
-// missing fields

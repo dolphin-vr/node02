@@ -5,8 +5,6 @@ export class HttpError extends Error {
    }
 }
 
-// export default HttpError;
-// export {HttpError};
 
 // export const HttpError = (status, message) => {
 //    const error = new Error(message);
